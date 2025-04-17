@@ -7,8 +7,8 @@ Jett Morgan -
 
 Steven Gervacio- 
 
-Aaron - 
+Aaron Maryfield- 
 
-Jerry - 
+Gerardo Gutierrez - 
 
 # Game Status
