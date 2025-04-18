@@ -1,6 +1,7 @@
 # CS596-AdvGame-Final-Project 
 # Mobile Pinball Game 
 
+* Team Spaghetti Code
 * Due Date: 5/8/2025
 * Professor Fodor
 * Contributors: Jett Morgan, Steven Gervacio, Aaron Maryfield, Gerardo Gutierrez
