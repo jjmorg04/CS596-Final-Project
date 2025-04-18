@@ -1,7 +1,8 @@
-# CS596-AdvGame-Final-Project
+# CS596-AdvGame-Final-Project Mobile Pinball Game 
 Due Date: 5/8/2025
+
 Professor Fodor
-# Mobile Pinball Game 
+# 
 # Game Description
 Our final project is a mobile pinball game built in Unity 3D, designed to recreate the traditional pinball game with modern features like mobile sensors, environmental triggers, and potential VR integration. The player/user launches a pinball using a pull to shoot button, then taps on either side of the screen to control the left and right flippers. The goal is the same as the traditional pinball game to keep the ball in play for as long as possible, rack up as many points by hitting bumpers, ramps, bonus zones, and trigger special effects through collisions with target objects.
 
