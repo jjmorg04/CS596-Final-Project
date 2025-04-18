@@ -1,4 +1,5 @@
-# CS596-AdvGame-Final-Project Mobile Pinball Game 
+# CS596-AdvGame-Final-Project 
+Mobile Pinball Game 
 Due Date: 5/8/2025
 
 Professor Fodor
