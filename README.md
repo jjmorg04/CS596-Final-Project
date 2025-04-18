@@ -19,7 +19,7 @@ Steven Gervacio - Handles readme, UI/UX, scoring system, and on-screen elements 
 
 Aaron Maryfield- Handles game physics and input controls. This includes ball movement, flipper mechanics, collision detection, and tilting.
 
-Gerardo Gutierrez -  Responsible for art and scene design, pinball table layout, 3D models, lighting, and materials. 
+Gerardo Gutierrez -  Handles the art and scene design, pinball table layout, 3D models, lighting, and materials. 
 
 We are in constant communication through discord and all members understand the general design and pipeline.
 
