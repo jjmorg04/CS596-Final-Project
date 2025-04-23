@@ -1,5 +1,5 @@
 # CS596-AdvGame-Final-Project 
-# Mobile Pinball Game 
+# Certified Bumper Classic (Mobile Pinball Game) 
 
 * Team Spaghetti Code
 * Due Date: 5/8/2025
