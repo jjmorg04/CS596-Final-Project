@@ -32,6 +32,3 @@ We may need assistance in the following areas:
 * If we pursue VR, we may need guidance on setting up Unity’s plugins for mobile VR.
 
 * Feedback on the best way to implement bonus mechanics.
-
-# Game Status (Prototype Video)
-(Enter Link Here)
