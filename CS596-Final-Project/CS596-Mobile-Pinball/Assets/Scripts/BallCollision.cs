@@ -4,9 +4,9 @@ public class BallCollision : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("LeftFlipper"))
+    if (collision.gameObject.CompareTag("Flipper"))
         {
-            ScoreManager.Instance.AddPoint();
+            ScoreManager.instance.AddPoint(1); //Adds 1 point
         }
     }
 }
