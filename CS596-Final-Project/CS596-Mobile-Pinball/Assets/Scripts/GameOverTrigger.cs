@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameOverTrigger : MonoBehaviour
 {
@@ -8,14 +9,19 @@ public class GameOverTrigger : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private TMP_Text gameOverText;
     [SerializeField] private TMP_Text finalScoreText;
+    [SerializeField] private TMP_Text ballsLeftText;
 
-    [Header("Settings")]
+    [Header("Ball Settings")]
     [SerializeField] private string ballTag = "Ball";
+    [SerializeField] private GameObject ballPrefab;
+    [SerializeField] private Transform ballSpawnPoint;
+    [SerializeField] private int totalBalls = 3;
 
     private ScoreManager scoreManager;
+    private int ballsLeft;
     private bool gameEnded = false;
 
-    void Awake()
+    void Start()
     {
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
@@ -23,47 +29,80 @@ public class GameOverTrigger : MonoBehaviour
         scoreManager = FindObjectOfType<ScoreManager>();
         if (scoreManager == null)
             Debug.LogWarning("No ScoreManager found in scene!");
+
+        ballsLeft = totalBalls;
+        UpdateBallsUI();
+        SpawnNewBall();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (gameEnded) return;
+        if (!other.CompareTag(ballTag)) return;
 
-        if (other.CompareTag(ballTag))
+        Destroy(other.gameObject);
+        ballsLeft--;
+        UpdateBallsUI();
+
+        if (ballsLeft > 0)
         {
-            gameEnded = true;
-            EndGame(other.gameObject);
+            Invoke(nameof(SpawnNewBall), 1.5f); // wait before respawning
+        }
+        else
+        {
+            if (!gameEnded)
+            {
+                gameEnded = true;
+                EndGame();
+            }
         }
     }
 
-    private void EndGame(GameObject ball)
+    private void SpawnNewBall()
     {
-        // stop the ball’s physics
-        if (ball.TryGetComponent<Rigidbody>(out Rigidbody rb))
+        if (ballPrefab != null && ballSpawnPoint != null)
         {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rb.isKinematic = true;
-        }
+            GameObject newBall = Instantiate(ballPrefab, ballSpawnPoint.position, Quaternion.identity);
+            Rigidbody rb = newBall.GetComponent<Rigidbody>();
 
-        // save high score
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                StartCoroutine(EnablePhysics(rb));
+            }
+        }
+    }
+
+    private IEnumerator EnablePhysics(Rigidbody rb)
+    {
+        yield return new WaitForFixedUpdate(); // allow spawn to settle
+        rb.isKinematic = false;
+    }
+
+    private void UpdateBallsUI()
+    {
+        if (ballsLeftText != null)
+        {
+            ballsLeftText.text = "BALLS " + ballsLeft;
+        }
+    }
+
+    private void EndGame()
+    {
         if (scoreManager != null)
         {
             scoreManager.SaveHighScore();
         }
 
-        // show the panel
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);
 
-        // set the texts
         if (gameOverText != null)
             gameOverText.text = "GAME OVER";
 
         if (finalScoreText != null && scoreManager != null)
         {
-            finalScoreText.text = "FINAL SCORE\n" + scoreManager.GetScore().ToString("D4");
-                                
+            finalScoreText.text =
+                "FINAL SCORE\n" + scoreManager.GetScore().ToString("D4");
         }
     }
 
@@ -72,4 +111,5 @@ public class GameOverTrigger : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
+
 

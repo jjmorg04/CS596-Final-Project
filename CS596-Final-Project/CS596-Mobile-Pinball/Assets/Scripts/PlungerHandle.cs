@@ -1,14 +1,21 @@
 using UnityEngine;
+using TMPro;
 using System.Collections;
 
 public class PlungerHandle : MonoBehaviour
 {
-    public GameObject ball;               // ball
-    public float maxPull = 1.0f;          // how far handle travels
-    public float pullPerSecond = 0.5f;    // pullback speed while holding mouse button
-    public float maxForce = 500f;         // max force on ball
+    [Header("Ball Control")]
+    public GameObject ball;
+    public int ballsLeft = 3;
+    public TMP_Text ballsLeftText;
 
-    public float doubleClickTime = 0.3f;  // max time between clicks for double click
+    [Header("Launch Settings")]
+    public float maxPull = 1.0f;
+    public float pullPerSecond = 0.5f;
+    public float maxForce = 500f;
+
+    [Header("Input Settings")]
+    public float doubleClickTime = 0.3f;
     public float colliderDisableTime = 0.5f;
 
     private Vector3 startPos;
@@ -17,16 +24,36 @@ public class PlungerHandle : MonoBehaviour
     private int clickCount = 0;
     private float lastClickTime = 0f;
     private bool isHoldingAfterDoubleClick = false;
+    private bool hasFiredCurrentBall = false;
 
     void Start()
     {
         startPos = transform.position;
+
+        if (ball == null)
+            FindLatestBall();
+
+        UpdateBallsUI();
     }
 
     void Update()
     {
-        
-        if (Input.GetMouseButtonDown(0)) 
+        if (ball == null)
+        {
+            FindLatestBall();
+            hasFiredCurrentBall = false; // allow launch on next detection
+        }
+
+        HandleInput();
+        UpdatePull();
+        CheckRelease();
+    }
+
+    void HandleInput()
+    {
+        if (ballsLeft <= 0) return; // No balls? Disable input
+
+        if (Input.GetMouseButtonDown(0))
         {
             clickCount++;
             if (clickCount == 1)
@@ -37,26 +64,30 @@ public class PlungerHandle : MonoBehaviour
             {
                 if (Time.time - lastClickTime <= doubleClickTime)
                 {
-                    // detects double click
                     isHoldingAfterDoubleClick = true;
                 }
-                clickCount = 0; // reset click count after double-click
+                clickCount = 0;
             }
         }
+
         if (clickCount == 1 && Time.time - lastClickTime > doubleClickTime)
         {
             clickCount = 0;
         }
+    }
 
-        // increase pull while holding mouse
+    void UpdatePull()
+    {
         if (isHoldingAfterDoubleClick && Input.GetMouseButton(0))
         {
             currentPull += pullPerSecond * Time.deltaTime;
             currentPull = Mathf.Min(currentPull, maxPull);
             transform.position = startPos - Vector3.forward * currentPull;
         }
+    }
 
-        // fire on mouse release
+    void CheckRelease()
+    {
         if (isHoldingAfterDoubleClick && Input.GetMouseButtonUp(0))
         {
             Fire();
@@ -66,23 +97,24 @@ public class PlungerHandle : MonoBehaviour
 
     void Fire()
     {
-        Collider handleCollider = GetComponent<Collider>();
+        if (hasFiredCurrentBall || ball == null) return;
 
+        Collider handleCollider = GetComponent<Collider>();
         if (handleCollider != null)
-        {
             handleCollider.enabled = false;
-        }
 
         float force = (currentPull / maxPull) * maxForce;
-        if (ball != null)
-        {
-            Rigidbody rb = ball.GetComponent<Rigidbody>();
-            if (rb != null)
-                rb.AddForce(Vector3.forward * force);
-        }
-        // Reset handle
+
+        Rigidbody rb = ball.GetComponent<Rigidbody>();
+        if (rb != null)
+            rb.AddForce(Vector3.forward * force, ForceMode.Impulse);
+
         transform.position = startPos;
         currentPull = 0f;
+        hasFiredCurrentBall = true;
+
+        ballsLeft--; // ✅ deduct ball
+        UpdateBallsUI();
 
         StartCoroutine(ReEnableCollider());
     }
@@ -92,8 +124,21 @@ public class PlungerHandle : MonoBehaviour
         yield return new WaitForSeconds(colliderDisableTime);
         Collider handleCollider = GetComponent<Collider>();
         if (handleCollider != null)
-        {
             handleCollider.enabled = true;
+    }
+
+    void FindLatestBall()
+    {
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
+        if (balls.Length > 0)
+        {
+            ball = balls[balls.Length - 1];
         }
+    }
+
+    void UpdateBallsUI()
+    {
+        if (ballsLeftText != null)
+            ballsLeftText.text = "BALLS " + ballsLeft;
     }
 }
