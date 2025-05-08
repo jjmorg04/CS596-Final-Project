@@ -1,22 +1,22 @@
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static ScoreManager instance;
+    public static ScoreManager Instance;
+
     public TMP_Text Scoreboard;
     private int score = 0;
 
     void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
-            Destroy(gameObject);
+        Instance = this;
     }
-    public void AddPoint(int points)
+
+    public void AddScore(int value)
     {
-        score += points;
-        Scoreboard.text = "Score: " + score;
+        score += value;
+        Scoreboard.text = "SCORE " + score.ToString("D4");
     }
 }
+
