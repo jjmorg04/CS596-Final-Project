@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class BallCollision : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter(Collision collision)
     {
-    if (collision.gameObject.CompareTag("Flipper"))
+        if (collision.gameObject.CompareTag("Flipper"))
         {
-            ScoreManager.instance.AddPoint(1); //Adds 1 point
+            Debug.Log("Hit a flipper!");
+            ScoreManager.Instance.AddScore(100);
         }
     }
 }
+
