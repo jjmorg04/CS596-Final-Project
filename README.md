@@ -25,22 +25,23 @@ Gerardo Gutierrez -  Handles the board bumpers, ramps, physics of ball on ramps.
 We are in constant communication through discord and all members understand the general design and pipeline.
 
 # Grading Rubric
-Graphics: 10% 
+Graphics: 10% - 
+Shown in video
 
 Sound: 10%
 We use sounds for the ball hitting objects like plunger, wall, bumpers etc.
 No background music
 
-Gameplay: 20%
+Gameplay: 20% -
 Pinball gameplay as shown in video
 
-Fun factor: 10% 
+Fun factor: 10% -
 Titling your phone to make the ball go in the direction of the tilt. Resizing the pinball machine on your phone my pinching. Score adding for the gameplay.
 
-X-Factor: 25% This can be anything!
+X-Factor: 25% This can be anything! -
 We did mobile gameplay with a custom shader for the game.
 
-Project/Code quality: 25%
+Project/Code quality: 25% -
 This github contains all the files and code for the project
 
 
