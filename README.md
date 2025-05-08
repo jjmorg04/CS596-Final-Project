@@ -28,7 +28,7 @@ We are in constant communication through discord and all members understand the 
 Graphics: 10% - 
 Shown in video
 
-Sound: 10%
+Sound: 10% -
 We use sounds for the ball hitting objects like plunger, wall, bumpers etc.
 No background music
 
