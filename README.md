@@ -18,9 +18,9 @@ Jett Morgan - Worked on board layout, logic of moving flippers, ball mechanics, 
 
 Steven Gervacio - Handles readme, UI/UX, scoring system, and on-screen elements like score and ball count. Helped with plunger and aesthetic of the game.
 
-Aaron Maryfield- Handles game physics for the plunger and input controls. Built borders for pinball game.
+Aaron Maryfield- Handles game physics for the plunger and input controls. Built borders for pinball game. Helped with bumpers and tap features.
 
-Gerardo Gutierrez -  Handles the board bumpers, ramps, physics of ball on ramps.
+Gerardo Gutierrez -  Handles the board grooves and audio
 
 We are in constant communication through discord and all members understand the general design and pipeline.
 
