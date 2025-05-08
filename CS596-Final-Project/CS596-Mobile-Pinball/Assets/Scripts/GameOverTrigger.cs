@@ -57,7 +57,7 @@ public class GameOverTrigger : MonoBehaviour
             gameOverText.text = "GAME OVER";
 
         if (finalScoreText != null && scoreManager != null)
-            finalScoreText.text = "Final Score: " + scoreManager.GetScore();
+            finalScoreText.text = "Final Score\n" + scoreManager.GetScore();
     }
 
     public void RestartLevel()
