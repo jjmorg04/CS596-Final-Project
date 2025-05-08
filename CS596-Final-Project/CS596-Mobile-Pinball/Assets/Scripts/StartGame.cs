@@ -1,22 +1,60 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
-public class GameStarter : MonoBehaviour
+public class StartGame : MonoBehaviour
 {
+    [Header("UI Screens")]
     public GameObject startUI;
-    private float originalTimeScale = 1.5f; // ✅ Set this to whatever your game speed is
+    public GameObject endUI;
+
+    [Header("UI Text Fields")]
+    public TMP_Text startScreenPBText;   // PERSONAL BEST: on start screen
+    public float originalTimeScale = 1.5f;
 
     void Start()
     {
-        originalTimeScale = Time.timeScale; // In case it's already set before this
+        originalTimeScale = Time.timeScale;
         Time.timeScale = 0f;
-        startUI.SetActive(true);
+
+        if (startUI != null)
+            startUI.SetActive(true);
+
+        UpdatePersonalBestDisplay();
     }
 
-    public void StartGame()
+    public void StartGameNow()
     {
         Time.timeScale = originalTimeScale;
-        startUI.SetActive(false);
+
+        if (startUI != null)
+            startUI.SetActive(false);
+
+        if (endUI != null)
+            endUI.SetActive(false);
+    }
+
+    public void ReturnToStartScreen()
+    {
+        Time.timeScale = 0f;
+
+        if (startUI != null)
+            startUI.SetActive(true);
+
+        if (endUI != null)
+            endUI.SetActive(false);
+
+        UpdatePersonalBestDisplay();
+    }
+
+    private void UpdatePersonalBestDisplay()
+    {
+        if (startScreenPBText != null)
+        {
+            int highScore = PlayerPrefs.GetInt("HighScore", 0);
+            startScreenPBText.text = "PB " + highScore.ToString("D4");
+        }
     }
 }
+
+
 

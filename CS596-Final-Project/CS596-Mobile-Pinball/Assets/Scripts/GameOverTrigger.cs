@@ -5,23 +5,21 @@ using UnityEngine.SceneManagement;
 public class GameOverTrigger : MonoBehaviour
 {
     [Header("UI Elements")]
-    [SerializeField] private GameObject gameOverPanel;  // the panel object
-    [SerializeField] private TMP_Text  gameOverText;   // your “GAME OVER” text (TMP)
-    [SerializeField] private TMP_Text  finalScoreText; // the final score text (TMP)
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TMP_Text gameOverText;
+    [SerializeField] private TMP_Text finalScoreText;
 
     [Header("Settings")]
     [SerializeField] private string ballTag = "Ball";
 
     private ScoreManager scoreManager;
-    private bool         gameEnded = false;
+    private bool gameEnded = false;
 
     void Awake()
     {
-        // hide panel at start
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
-        // find your ScoreManager
         scoreManager = FindObjectOfType<ScoreManager>();
         if (scoreManager == null)
             Debug.LogWarning("No ScoreManager found in scene!");
@@ -48,6 +46,12 @@ public class GameOverTrigger : MonoBehaviour
             rb.isKinematic = true;
         }
 
+        // save high score
+        if (scoreManager != null)
+        {
+            scoreManager.SaveHighScore();
+        }
+
         // show the panel
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);
@@ -57,7 +61,10 @@ public class GameOverTrigger : MonoBehaviour
             gameOverText.text = "GAME OVER";
 
         if (finalScoreText != null && scoreManager != null)
-            finalScoreText.text = "Final Score\n" + scoreManager.GetScore();
+        {
+            finalScoreText.text = "FINAL SCORE\n" + scoreManager.GetScore().ToString("D4");
+                                
+        }
     }
 
     public void RestartLevel()
@@ -65,3 +72,4 @@ public class GameOverTrigger : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
+
