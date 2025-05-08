@@ -22,6 +22,7 @@ public class ScoreZone : MonoBehaviour
     {
         if (other.CompareTag("Ball")) // Ensure the object is the pinball
         {
+
             currentScore += scoreValue;
 
             Debug.Log("BALL HIT");
