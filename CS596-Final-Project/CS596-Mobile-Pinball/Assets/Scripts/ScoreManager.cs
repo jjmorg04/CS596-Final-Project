@@ -18,5 +18,9 @@ public class ScoreManager : MonoBehaviour
         score += value;
         Scoreboard.text = "SCORE " + score.ToString("D4");
     }
+    public int GetScore()
+    {
+        return score;
+    }
 }
 
