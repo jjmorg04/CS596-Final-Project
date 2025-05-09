@@ -18,7 +18,7 @@ The gameplay will incorporate real-time physics to simulate pinball mechanics. W
 The game will feature several sound effects for flipper activation, bumper collisions, launching the ball, and score multipliers to enhance gameplay.
 
 # Group Organization
-Jett Morgan - Worked on board layout, logic of moving flippers, ball mechanics, custom shader. Handled sound effects and event scripting. Will create audio triggers, setup audio sources.
+Jett Morgan - Worked on mobile input controls (tap for flippers, pinch zoom in/out, two-finger pan around, tilt cheating), board layout and artwork, ball mechanics, custom shader. Handled sound effects and event scripting. Helped with UI design and logic for start/end game screens and scoreboard.
 
 Steven Gervacio - Handles readme, UI/UX, scoring system, and on-screen elements like score and ball count. Helped with plunger and aesthetic of the game.
 
@@ -33,7 +33,7 @@ Graphics: 10% -
 Shown in video
 
 Sound: 10% -
-We use sounds for the ball hitting objects like plunger, wall, bumpers etc.
+We use sounds for the ball hitting objects like plunger, wall, bumpers, score circles, etc.
 No background music
 
 Gameplay: 20% -
