@@ -739,6 +739,9 @@ MonoBehaviour:
   maxForce: 50
   colliderDisableTime: 0.5
   doubleClickTime: 0.3
+  audioSource: {fileID: 330585548}
+  launchSound: {fileID: 8300000, guid: 0a0fa54215c5a44e38126542bebf9a4e, type: 3}
+  launchVolume: 0.6
 --- !u!1 &237111723
 GameObject:
   m_ObjectHideFlags: 0

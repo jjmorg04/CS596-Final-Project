@@ -18,6 +18,11 @@ public class PlungerHandle : MonoBehaviour
     [Header("Input Settings")]
     public float doubleClickTime = 0.3f;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip launchSound;
+    [Range(0f, 1f)] public float launchVolume = 0.6f;
+
     private Vector3 startPos;
     private float currentPull = 0f;
     private int clickCount = 0;
@@ -80,7 +85,6 @@ public class PlungerHandle : MonoBehaviour
     {
         if (ballsLeft <= 0) return;
 
-        // Mobile touch
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -104,7 +108,6 @@ public class PlungerHandle : MonoBehaviour
                 currentPull = 0f;
             }
         }
-        // Mouse drag (editor support)
         else if (Input.GetMouseButtonDown(0))
         {
             swipeStart = Input.mousePosition;
@@ -164,6 +167,10 @@ public class PlungerHandle : MonoBehaviour
         ballsLeft--;
         UpdateBallsUI();
 
+        // ✅ Play launch sound
+        if (audioSource != null && launchSound != null)
+            audioSource.PlayOneShot(launchSound, launchVolume);
+
         StartCoroutine(ReEnableCollider());
     }
 
@@ -188,4 +195,3 @@ public class PlungerHandle : MonoBehaviour
             ballsLeftText.text = "BALLS " + ballsLeft;
     }
 }
-
