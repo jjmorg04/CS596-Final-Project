@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+// Scripting for pinball flippers/paddles
 public class PaddleController : MonoBehaviour
 {
     [Header("Paddles")]
@@ -26,13 +27,8 @@ public class PaddleController : MonoBehaviour
 
     void Start()
     {
-        if (!leftPaddle || !rightPaddle || !leftButton || !rightButton)
-        {
-            Debug.LogError("Missing paddle or button references in Inspector!");
-            return;
-        }
 
-        // Set up LEFT paddle
+        // Set up L paddle
         leftSpring = leftPaddle.spring;
         leftSpring.spring = paddleForce;
         leftSpring.damper = damper;
@@ -40,7 +36,7 @@ public class PaddleController : MonoBehaviour
         leftPaddle.spring = leftSpring;
         leftPaddle.useSpring = true;
 
-        // Set up RIGHT paddle
+        // Set up R paddle
         rightSpring = rightPaddle.spring;
         rightSpring.spring = paddleForce;
         rightSpring.damper = damper;
@@ -55,13 +51,13 @@ public class PaddleController : MonoBehaviour
         leftPaddle.useLimits = true;
         rightPaddle.useLimits = true;
 
-        // Add UI triggers
+        // Add button from left/right screen triggers
         AddEventTrigger(leftButton, EventTriggerType.PointerDown, LeftPaddleDown);
         AddEventTrigger(leftButton, EventTriggerType.PointerUp, LeftPaddleUp);
         AddEventTrigger(rightButton, EventTriggerType.PointerDown, RightPaddleDown);
         AddEventTrigger(rightButton, EventTriggerType.PointerUp, RightPaddleUp);
 
-        audioSource.volume = 0.1f; // volume from 0 (mute) to 1 (full)
+        audioSource.volume = 0.1f; // Manual volume setting for audio clip
 
     }
 
@@ -76,6 +72,7 @@ public class PaddleController : MonoBehaviour
         trigger.triggers.Add(entry);
     }
 
+    // Functions for flipper press and release
     public void LeftPaddleDown()
     {
         leftSpring.targetPosition = -paddleAngle;
@@ -102,6 +99,7 @@ public class PaddleController : MonoBehaviour
         rightPaddle.spring = rightSpring;
     }
 
+    // Play flipper sound when activated
     private void PlayFlipSound()
     {
         if (audioSource != null && flipSound != null)

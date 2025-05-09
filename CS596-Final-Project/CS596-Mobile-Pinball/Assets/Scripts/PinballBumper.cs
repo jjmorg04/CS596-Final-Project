@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Scripting for bumper logic
 public class PinballBumper : MonoBehaviour
 {
     public float bumperForce = 20f;
@@ -10,9 +11,8 @@ public class PinballBumper : MonoBehaviour
 
     void Start()
     {
-        // Optional: attach one to this object or let it remain null and fall back
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = 0.7f; // volume from 0 (mute) to 1 (full)
+        audioSource.volume = 0.7f; // Volume to prevent ear damage
 
     }
 
@@ -23,7 +23,6 @@ public class PinballBumper : MonoBehaviour
             ScoreManager.Instance.AddScore(100);
             Rigidbody ballRigidbody = collision.rigidbody;
 
-            // ✅ Play sound using PlayOneShot if possible, fallback if needed
             if (hitSound != null)
             {
                 if (audioSource != null)

@@ -6,7 +6,7 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance;
 
     public TMP_Text Scoreboard;
-    public TMP_Text HighScoreHUD; // ✅ New text reference
+    public TMP_Text HighScoreHUD;
 
     private int score = 0;
     private const string HighScoreKey = "HighScore";
@@ -15,7 +15,7 @@ public class ScoreManager : MonoBehaviour
     {
         Instance = this;
 
-        // Display high score at game start (if the HUD text is assigned)
+        // Display high score at game start
         if (HighScoreHUD != null)
         {
             int highScore = GetHighScore();
@@ -23,6 +23,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    // Add score value and display
     public void AddScore(int value)
     {
         score += value;
@@ -34,6 +35,7 @@ public class ScoreManager : MonoBehaviour
         return score;
     }
 
+    // Saves new high score if score is higher
     public void SaveHighScore()
     {
         int currentHigh = PlayerPrefs.GetInt(HighScoreKey, 0);
@@ -52,7 +54,8 @@ public class ScoreManager : MonoBehaviour
         return PlayerPrefs.GetInt(HighScoreKey, 0);
     }
 
-    [ContextMenu("Reset High Score")]
+// Reset score option for demo play
+[ContextMenu("Reset High Score")]
 public void ResetHighScore()
 {
     PlayerPrefs.DeleteKey("HighScore");

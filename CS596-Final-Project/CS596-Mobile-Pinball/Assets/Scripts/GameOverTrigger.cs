@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+// Scripting for end game
 public class GameOverTrigger : MonoBehaviour
 {
     [Header("UI Elements")]
@@ -45,7 +46,7 @@ public class GameOverTrigger : MonoBehaviour
 
         if (ballsLeft > 0)
         {
-            Invoke(nameof(SpawnNewBall), 1.5f); // wait before respawning
+            Invoke(nameof(SpawnNewBall), 1.5f); // Wait before spawning next ball
         }
         else
         {
@@ -74,7 +75,7 @@ public class GameOverTrigger : MonoBehaviour
 
     private IEnumerator EnablePhysics(Rigidbody rb)
     {
-        yield return new WaitForFixedUpdate(); // allow spawn to settle
+        yield return new WaitForFixedUpdate(); // Allow spawn to settle
         rb.isKinematic = false;
     }
 

@@ -3,13 +3,13 @@ using UnityEngine;
 public class BallTiltControl : MonoBehaviour
 {
     public Rigidbody ball;
-    public float tiltForce = 5f; // tweak to taste
+    public float tiltForce = 5f;
 
     private GameObject lastTrackedBall;
 
     void Update()
     {
-        // Automatically find the latest ball if null or destroyed
+        // Automatically find the spawned ball
         if (ball == null)
         {
             FindLatestBall();

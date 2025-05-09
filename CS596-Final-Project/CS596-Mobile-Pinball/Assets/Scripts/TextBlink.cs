@@ -2,6 +2,8 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 
+
+// Script that creates the blinking title effect on the start screen
 public class BlinkText : MonoBehaviour
 {
     public TextMeshProUGUI textToBlink;
@@ -25,7 +27,7 @@ public class BlinkText : MonoBehaviour
         while (true)
         {
             textToBlink.enabled = !textToBlink.enabled;
-            yield return new WaitForSecondsRealtime(blinkInterval); // ✅ works even if timeScale = 0
+            yield return new WaitForSecondsRealtime(blinkInterval);
         }
     }
 }

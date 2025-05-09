@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
+// Scripting for the plunger handle
 public class PlungerHandle : MonoBehaviour
 {
     [Header("Ball Control")]
@@ -167,7 +168,6 @@ public class PlungerHandle : MonoBehaviour
         ballsLeft--;
         UpdateBallsUI();
 
-        // ✅ Play launch sound
         if (audioSource != null && launchSound != null)
             audioSource.PlayOneShot(launchSound, launchVolume);
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
+// Unused paddle/flipper script
 public class FlipperScript : MonoBehaviour
 {
     public float restPosition = 0f;

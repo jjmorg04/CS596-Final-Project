@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Scripting for camera two-finger pinch-zoom & panning
 public class PinchZoomPan : MonoBehaviour
 {
     public Camera cam;
@@ -26,7 +27,7 @@ public class PinchZoomPan : MonoBehaviour
             Touch touch0 = Input.GetTouch(0);
             Touch touch1 = Input.GetTouch(1);
 
-            // ---- Pinch Zoom ----
+            // Pinch zoom logic
             Vector2 prevTouch0 = touch0.position - touch0.deltaPosition;
             Vector2 prevTouch1 = touch1.position - touch1.deltaPosition;
 
@@ -46,11 +47,11 @@ public class PinchZoomPan : MonoBehaviour
                 cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, minZoom, maxZoom);
             }
 
-            // ---- Two-Finger Pan ----
+            // Two-finger pan logic
             Vector2 currentMidpoint = (touch0.position + touch1.position) * 0.5f;
             Vector2 deltaMidpoint = currentMidpoint - lastMidpoint;
 
-            // Convert screen delta to world delta
+            // Convert screen to world delta
             if (touch0.phase == TouchPhase.Moved || touch1.phase == TouchPhase.Moved)
             {
                 Vector3 panDirection = -cam.transform.right * deltaMidpoint.x * panSpeed

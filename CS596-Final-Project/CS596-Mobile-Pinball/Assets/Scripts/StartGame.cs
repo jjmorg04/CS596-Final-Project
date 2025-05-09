@@ -3,12 +3,10 @@ using TMPro;
 
 public class StartGame : MonoBehaviour
 {
-    [Header("UI Screens")]
+
     public GameObject startUI;
     public GameObject endUI;
-
-    [Header("UI Text Fields")]
-    public TMP_Text startScreenPBText;   // PERSONAL BEST: on start screen
+    public TMP_Text startScreenPBText;   // Personal best score on start screen
     public float originalTimeScale = 1.5f;
 
     void Start()
@@ -22,6 +20,7 @@ public class StartGame : MonoBehaviour
         UpdatePersonalBestDisplay();
     }
 
+    // Starts game with original 1.5 time scale
     public void StartGameNow()
     {
         Time.timeScale = originalTimeScale;
@@ -46,6 +45,7 @@ public class StartGame : MonoBehaviour
         UpdatePersonalBestDisplay();
     }
 
+    // Update PB to screen
     private void UpdatePersonalBestDisplay()
     {
         if (startScreenPBText != null)
