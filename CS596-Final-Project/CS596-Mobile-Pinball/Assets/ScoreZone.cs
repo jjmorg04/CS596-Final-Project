@@ -3,9 +3,10 @@ using UnityEngine.UI;
 
 public class ScoreZone : MonoBehaviour
 {
-    public int scoreValue = 100; // Points awarded
-    public Text scoreText;       // Reference to the UI Text element
-    public AudioClip hitSound;   // Sound to play on hit
+    public int scoreValue = 100;       // Points awarded
+    public Text scoreText;             // Reference to UI Text
+    public AudioClip hitSound;         // Sound to play on hit
+    [Range(0f, 1f)] public float hitVolume = 0.5f; // Custom volume for sound
 
     private static int currentScore = 0;
     private AudioSource audioSource;
@@ -20,21 +21,27 @@ public class ScoreZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ball")) // Ensure the object is the pinball
+        if (other.CompareTag("Ball"))
         {
-
             currentScore += scoreValue;
-
+            ScoreManager.Instance.AddScore(scoreValue);
             Debug.Log("BALL HIT");
-
-            ScoreManager.Instance.AddScore(100);
 
             if (scoreText != null)
                 UpdateScoreUI();
 
-            if (audioSource != null && hitSound != null)
-                audioSource.PlayOneShot(hitSound);
+            PlaySound();
         }
+    }
+
+    void PlaySound()
+    {
+        if (hitSound == null) return;
+
+        if (audioSource != null)
+            audioSource.PlayOneShot(hitSound, hitVolume);
+        else
+            AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
     }
 
     void UpdateScoreUI()

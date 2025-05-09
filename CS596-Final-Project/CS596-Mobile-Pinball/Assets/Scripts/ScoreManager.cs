@@ -51,5 +51,13 @@ public class ScoreManager : MonoBehaviour
     {
         return PlayerPrefs.GetInt(HighScoreKey, 0);
     }
+
+    [ContextMenu("Reset High Score")]
+public void ResetHighScore()
+{
+    PlayerPrefs.DeleteKey("HighScore");
+    Debug.Log("High score reset.");
+}
+
 }
 

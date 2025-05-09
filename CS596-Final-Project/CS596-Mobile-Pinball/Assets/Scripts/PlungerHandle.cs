@@ -13,18 +13,20 @@ public class PlungerHandle : MonoBehaviour
     public float maxPull = 1.0f;
     public float pullPerSecond = 0.5f;
     public float maxForce = 500f;
+    public float colliderDisableTime = 0.5f;
 
     [Header("Input Settings")]
     public float doubleClickTime = 0.3f;
-    public float colliderDisableTime = 0.5f;
 
     private Vector3 startPos;
     private float currentPull = 0f;
-
     private int clickCount = 0;
     private float lastClickTime = 0f;
     private bool isHoldingAfterDoubleClick = false;
     private bool hasFiredCurrentBall = false;
+
+    private Vector2 swipeStart;
+    private bool isSwiping = false;
 
     void Start()
     {
@@ -41,17 +43,18 @@ public class PlungerHandle : MonoBehaviour
         if (ball == null)
         {
             FindLatestBall();
-            hasFiredCurrentBall = false; // allow launch on next detection
+            hasFiredCurrentBall = false;
         }
 
         HandleInput();
+        HandleSwipeInput();
         UpdatePull();
         CheckRelease();
     }
 
     void HandleInput()
     {
-        if (ballsLeft <= 0) return; // No balls? Disable input
+        if (ballsLeft <= 0) return;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -60,12 +63,9 @@ public class PlungerHandle : MonoBehaviour
             {
                 lastClickTime = Time.time;
             }
-            else if (clickCount == 2)
+            else if (clickCount == 2 && Time.time - lastClickTime <= doubleClickTime)
             {
-                if (Time.time - lastClickTime <= doubleClickTime)
-                {
-                    isHoldingAfterDoubleClick = true;
-                }
+                isHoldingAfterDoubleClick = true;
                 clickCount = 0;
             }
         }
@@ -73,6 +73,54 @@ public class PlungerHandle : MonoBehaviour
         if (clickCount == 1 && Time.time - lastClickTime > doubleClickTime)
         {
             clickCount = 0;
+        }
+    }
+
+    void HandleSwipeInput()
+    {
+        if (ballsLeft <= 0) return;
+
+        // Mobile touch
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            Vector2 pos = touch.position;
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                swipeStart = pos;
+                isSwiping = true;
+            }
+            else if (touch.phase == TouchPhase.Moved && isSwiping)
+            {
+                float drag = (swipeStart.y - pos.y) / Screen.height;
+                currentPull = Mathf.Clamp(drag * maxPull * 2f, 0f, maxPull);
+                transform.position = startPos - Vector3.forward * currentPull;
+            }
+            else if ((touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled) && isSwiping)
+            {
+                if (currentPull > 0.1f) Fire();
+                isSwiping = false;
+                currentPull = 0f;
+            }
+        }
+        // Mouse drag (editor support)
+        else if (Input.GetMouseButtonDown(0))
+        {
+            swipeStart = Input.mousePosition;
+            isSwiping = true;
+        }
+        else if (Input.GetMouseButton(0) && isSwiping)
+        {
+            float drag = (swipeStart.y - Input.mousePosition.y) / Screen.height;
+            currentPull = Mathf.Clamp(drag * maxPull * 2f, 0f, maxPull);
+            transform.position = startPos - Vector3.forward * currentPull;
+        }
+        else if (Input.GetMouseButtonUp(0) && isSwiping)
+        {
+            if (currentPull > 0.1f) Fire();
+            isSwiping = false;
+            currentPull = 0f;
         }
     }
 
@@ -113,7 +161,7 @@ public class PlungerHandle : MonoBehaviour
         currentPull = 0f;
         hasFiredCurrentBall = true;
 
-        ballsLeft--; // ✅ deduct ball
+        ballsLeft--;
         UpdateBallsUI();
 
         StartCoroutine(ReEnableCollider());
@@ -131,9 +179,7 @@ public class PlungerHandle : MonoBehaviour
     {
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
         if (balls.Length > 0)
-        {
             ball = balls[balls.Length - 1];
-        }
     }
 
     void UpdateBallsUI()
@@ -142,3 +188,4 @@ public class PlungerHandle : MonoBehaviour
             ballsLeftText.text = "BALLS " + ballsLeft;
     }
 }
+
