@@ -6,6 +6,10 @@
 * Professor Fodor
 * Contributors: Jett Morgan, Steven Gervacio, Aaron Maryfield, Gerardo Gutierrez
 
+# Video Demo
+* [Watch Demonstration Video](https://www.youtube.com/watch?v=iOm5lHmGBTQ)
+
+
 # Game Description
 Our final project is a mobile pinball game built in Unity 3D, designed to recreate the traditional pinball game with modern features like mobile sensors and environmental triggers. The player/user launches a pinball using a pull to shoot button, then taps on either side of the screen to control the left and right flippers. The goal is the same as the traditional pinball game to keep the ball in play for as long as possible, rack up as many points by hitting bumpers, ramps, bonus zones, and trigger special effects through collisions with target objects. We implemented a moving shader for the title of the game. We learned this in one of our projects earlier in the semester.
 
